@@ -1,0 +1,212 @@
+================
+Basic type
+================
+
+Foo: I32
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (primitive_type)))
+
+================
+List type
+================
+
+Foo: List Str
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (list_type
+      element: (primitive_type))))
+
+================
+Map string-keyed
+================
+
+Foo: Map Str I32
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (map_type
+      key: (primitive_type)
+      value: (primitive_type))))
+
+================
+Map variant-keyed
+================
+
+Status: [A, B]
+Foo: Map Status I32
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (tag_union
+      (tag_variant name: (upper_ident))
+      (tag_variant name: (upper_ident))))
+  (type_definition
+    name: (upper_ident)
+    type: (map_type
+      key: (type_reference (upper_ident))
+      value: (primitive_type))))
+
+================
+Closed record
+================
+
+Foo: {name: Str, age: I32}
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (record_type
+      (record_field
+        name: (lower_ident)
+        type: (primitive_type))
+      (record_field
+        name: (lower_ident)
+        type: (primitive_type)))))
+
+================
+Open record
+================
+
+Foo: {name: Str}*
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (record_type
+      (record_field
+        name: (lower_ident)
+        type: (primitive_type))
+      (open_modifier))))
+
+================
+Optional field
+================
+
+Foo: {name?: Str}
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (record_type
+      (record_field
+        name: (lower_ident)
+        type: (primitive_type)))))
+
+================
+Closed tag union
+================
+
+Foo: [A, B I32]
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (tag_union
+      (tag_variant name: (upper_ident))
+      (tag_variant
+        name: (upper_ident)
+        payload: (primitive_type)))))
+
+================
+Open tag union
+================
+
+Foo: [A, B]*
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (tag_union
+      (tag_variant name: (upper_ident))
+      (tag_variant name: (upper_ident))
+      (open_modifier))))
+
+================
+Type reference
+================
+
+Bar: I32
+Foo: Bar
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (primitive_type))
+  (type_definition
+    name: (upper_ident)
+    type: (type_reference (upper_ident))))
+
+================
+Nested list
+================
+
+Foo: List List I32
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (list_type
+      element: (list_type
+        element: (primitive_type)))))
+
+================
+Trailing comma in record
+================
+
+Foo: {a: I32,}
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (record_type
+      (record_field
+        name: (lower_ident)
+        type: (primitive_type)))))
+
+================
+Multiple definitions
+================
+
+Foo: I32
+Bar: Str
+
+---
+
+(schema
+  (type_definition
+    name: (upper_ident)
+    type: (primitive_type))
+  (type_definition
+    name: (upper_ident)
+    type: (primitive_type)))

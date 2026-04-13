@@ -1,0 +1,19 @@
+{
+  "name": "tree-sitter-babylon",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for Babylon schema language",
+  "main": "bindings/node",
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter generate && tree-sitter test"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.25"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.babylon",
+      "file-types": ["babylon"]
+    }
+  ]
+}
